@@ -17,43 +17,23 @@ function main() {
         }
       });
 
-	// affix the navbar after scroll below header
-$('#nav').affix({
-      offset: {
-        top: $('header').height()
-      }
+
+const $nav = $('#nav');
+const $about = $('#about');
+
+window.addEventListener('scroll', (e) => {
+  if ($nav.offset().top <= $(window).scrollTop()) {
+    $nav.removeClass('affix-top');
+    $nav.addClass('affix');
+    $about.css('margin-top', '72px');
+  }
+
+  if ($about.offset().top - 72 > $(window).scrollTop()) {
+    $nav.removeClass('affix');
+    $nav.addClass('affix-top');
+    $about.css('margin-top', '0');
+  }
 });
-
-	// skills chart
-	$(document).ready(function(e) {
-	//var windowBottom = $(window).height();
-	var index=0;
-	$(document).scroll(function(){
-		var top = $('#skills').height()-$(window).scrollTop();
-		if(top<-300){
-			if(index==0){
-
-				$('.chart').easyPieChart({
-					easing: 'easeOutBounce',
-					onStep: function(from, to, percent) {
-						$(this.el).find('.percent').text(Math.round(percent));
-					}
-				});
-
-				}
-			index++;
-		}
-	});
-	});
-
-	// Hide nav on click
-  $(".navbar-nav li a").click(function (event) {
-    // check if window is small enough so dropdown is created
-    var toggle = $(".navbar-toggle").is(":visible");
-    if (toggle) {
-      $(".navbar-collapse").collapse('hide');
-    }
-  });
 
   	// Portfolio isotope filter
     $(window).load(function() {
@@ -92,11 +72,6 @@ $('#nav').affix({
 			time: 1500 // the speed time in ms
 			});
 		}
-	});
-
-  	// Pretty Photo
-	$("a[rel^='prettyPhoto']").prettyPhoto({
-		social_tools: false
 	});
 
 }());
